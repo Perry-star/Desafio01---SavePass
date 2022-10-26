@@ -35,7 +35,7 @@ export function Home() {
 
     const response = await AsyncStorage.getItem(dataKey);
 
-    const parsedData = JSON.parse(response);
+    const parsedData = response ? JSON.parse(response) : [];
 
     setData(parsedData);
     setSearchListData(parsedData);
@@ -106,4 +106,5 @@ export function Home() {
       </Container>
     </>
   )
+}
 }
