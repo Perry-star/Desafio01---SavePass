@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextInputProps } from 'react-native';
-import { Control, Controller } from 'react-hook-form';
+import { Controller, FieldPath, FieldValues, UseControllerProps } from 'react-hook-form';
 
 import {
   Container,
@@ -12,21 +12,19 @@ import {
   Icon
 } from './styles';
 
-interface Props extends TextInputProps {
-  control: Control;
-  name: string;
+type Props<T extends FieldValues, K extends FieldPath<T>> = TextInputProps & UseControllerProps<T, K> & {
   title: string;
-  error: string;
+  error: any;
 }
 
-export function Input({
+export function Input<T extends FieldValues, K extends FieldPath<T>>({
   name,
   control,
   title,
   error,
   secureTextEntry,
   ...rest
-}: Props) {
+}: Props<T, K>) {
   const [passwordHidden, setPasswordHidden] = useState(true);
 
   return (

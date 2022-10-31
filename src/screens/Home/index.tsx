@@ -34,18 +34,26 @@ export function Home() {
 
 
     const response = await AsyncStorage.getItem(dataKey);
+    
+    if(response) {
+      const parsedData = response ? JSON.parse(response) : [];
 
-    const parsedData = response ? JSON.parse(response) : [];
+      setData(parsedData);
+      setSearchListData(parsedData);
+    }
 
-    setData(parsedData);
-    setSearchListData(parsedData);
-
-
+  }
   function handleFilterLoginData() {
     // Filter results inside data, save with setSearchListData
 
     const filteredData = searchListData.filter(data => {
-      if(data.service_name.includes(searchText)) {
+      const isValid = data.service_name
+      .toLowerCase()
+      .includes(searchText.toLowerCase());
+
+
+
+      if(isValid) {
         return data;
       }
     })
@@ -55,6 +63,9 @@ export function Home() {
 
   function handleChangeInputText(text: string) {
     // Update searchText value
+    if(!text) {
+      setSearchListData(data)
+    }
 
     setSearchText(text);
   }
@@ -106,5 +117,4 @@ export function Home() {
       </Container>
     </>
   )
-}
 }
